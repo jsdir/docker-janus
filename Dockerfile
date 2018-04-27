@@ -170,4 +170,8 @@ RUN \
 
 USER janus
 
+
+# add config
+ADD janus/etc/janus/*.cfg /opt/janus/etc/janus/
+
 CMD ["/opt/janus/bin/janus"]
