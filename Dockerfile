@@ -170,8 +170,12 @@ RUN \
 
 USER janus
 
-
 # add config
 ADD janus/etc/janus/*.cfg /opt/janus/etc/janus/
+
+# exposed ports
+EXPOSE 8088
+EXPOSE 8188
+
 
 CMD ["/opt/janus/bin/janus"]
