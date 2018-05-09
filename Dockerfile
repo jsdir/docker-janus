@@ -7,7 +7,7 @@
 FROM debian:jessie
 
 # file maintainer author
-MAINTAINER brendan jocson <brendan@jocson.eu>
+MAINTAINER yulius tjahjadi <yulius@fxpal.com>
 
 # docker build environments
 ENV CONFIG_PATH="/opt/janus/etc/janus"
