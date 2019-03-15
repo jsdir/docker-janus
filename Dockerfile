@@ -14,7 +14,7 @@ ENV CONFIG_PATH="/opt/janus/etc/janus"
 
 # docker build arguments
 ARG BUILD_SRC="/usr/local/src"
-ARG JANUS_VERSION="v0.3.1"
+ARG JANUS_VERSION="v0.6.2"
 ARG JANUS_WITH_POSTPROCESSING="1"
 ARG JANUS_WITH_BORINGSSL="1"
 ARG JANUS_WITH_DOCS="0"
@@ -89,6 +89,12 @@ RUN \
     && ./configure --prefix=/usr --enable-openssl \
     && make shared_library \
     && make install \
+# build libconfig
+    && curl -fSL https://hyperrealm.github.io/libconfig/dist/libconfig-1.7.2.tar.gz -o ${BUILD_SRC}/libconfig-1.7.2.tar.gz \
+    && tar xzf ${BUILD_SRC}/libconfig-1.7.2.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/libconfig-1.7.2 \
+    && ./configure --prefix=/usr \
+    && make install \
 # build boringssl
     && if [ $JANUS_WITH_BORINGSSL = "1" ]; then git clone https://boringssl.googlesource.com/boringssl ${BUILD_SRC}/boringssl \
     && cd ${BUILD_SRC}/boringssl \
@@ -147,6 +153,7 @@ RUN \
     && ./autogen.sh \
     && ./configure ${JANUS_CONFIG_DEPS} $JANUS_CONFIG_OPTIONS \
     && make \
+    && make configs \
     && make install \
 # folder ownership
     && chown -R janus:janus /opt/janus \
@@ -173,7 +180,7 @@ RUN \
 USER janus
 
 # add config
-ADD janus/etc/janus/*.cfg /opt/janus/etc/janus/
+# ADD janus/etc/janus/*.cfg /opt/janus/etc/janus/
 
 # exposed ports
 EXPOSE 8088
