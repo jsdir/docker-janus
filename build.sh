@@ -26,6 +26,14 @@ cd ${BUILD_SRC}/libconfig-1.7.2
 ./configure --prefix=/usr
 make install
 
+# build libnice
+git clone https://gitlab.freedesktop.org/libnice/libnice ${BUILD_SRC}/libnice
+cd ${BUILD_SRC}/libnice
+./autogen.sh
+./configure --prefix=/usr
+make
+make install
+
 # build boringssl
 if [ $JANUS_WITH_BORINGSSL = "1" ]; then
     git clone https://boringssl.googlesource.com/boringssl ${BUILD_SRC}/boringssl
