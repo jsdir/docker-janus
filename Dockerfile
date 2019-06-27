@@ -4,7 +4,7 @@
 ############################################################
 
 # set base image debian jessie
-FROM debian:jessie
+FROM debian:buster
 
 # file maintainer author
 MAINTAINER yulius tjahjadi <yulius@fxpal.com>
@@ -34,12 +34,13 @@ ARG JANUS_CONFIG_OPTIONS="\
 ARG JANUS_BUILD_DEPS_DEV="\
     libcurl4-openssl-dev \
     libjansson-dev \
-    libnice-dev \
     libssl-dev \
     libsofia-sip-ua-dev \
     libglib2.0-dev \
     libopus-dev \
     libogg-dev \
+    libsrtp2-dev \
+    gtk-doc-tools \
     pkg-config \
     "
 ARG JANUS_BUILD_DEPS_EXT="\

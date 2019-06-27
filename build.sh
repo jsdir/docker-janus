@@ -11,13 +11,21 @@ if [ $JANUS_WITH_RABBITMQ = "0" ]; then export JANUS_CONFIG_OPTIONS="$JANUS_CONF
 DEBIAN_FRONTEND=noninteractive apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $JANUS_BUILD_DEPS_DEV ${JANUS_BUILD_DEPS_EXT}
 
-# build libsrtp
-curl -fSL https://github.com/cisco/libsrtp/archive/v2.0.0.tar.gz -o ${BUILD_SRC}/v2.0.0.tar.gz
-tar xzf ${BUILD_SRC}/v2.0.0.tar.gz -C ${BUILD_SRC}
-cd ${BUILD_SRC}/libsrtp-2.0.0
-./configure --prefix=/usr --enable-openssl
-make shared_library
+# install libnice
+git clone https://gitlab.freedesktop.org/libnice/libnice ${BUILD_SRC}/libnice
+cd ${BUILD_SRC}/libnice
+./autogen.sh
+./configure --prefix=/usr
+make
 make install
+
+# build libsrtp
+# curl -fSL https://github.com/cisco/libsrtp/archive/v2.0.0.tar.gz -o ${BUILD_SRC}/v2.0.0.tar.gz
+# tar xzf ${BUILD_SRC}/v2.0.0.tar.gz -C ${BUILD_SRC}
+# cd ${BUILD_SRC}/libsrtp-2.0.0
+# ./configure --prefix=/usr --enable-openssl
+# make shared_library
+# make install
 
 # build libconfig
 curl -fSL https://hyperrealm.github.io/libconfig/dist/libconfig-1.7.2.tar.gz -o ${BUILD_SRC}/libconfig-1.7.2.tar.gz
